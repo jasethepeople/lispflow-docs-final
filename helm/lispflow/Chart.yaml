@@ -1,0 +1,15 @@
+apiVersion: v2
+name: lispflow
+description: LispFlow - Lisp-based metering and billing engine
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+dependencies:
+  - name: postgresql
+    version: 15.5.32
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+  - name: redis
+    version: 18.6.2
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled

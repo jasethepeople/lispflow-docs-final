@@ -1,0 +1,13 @@
+{
+  "dashboard": {
+    "title": "LispFlow Billing",
+    "panels": [
+      {"title": "Evaluations / sec", "type": "graph", "targets": [{"expr": "rate(lispflow_evaluations_total[5m])"}]},
+      {"title": "P95 Latency", "type": "graph", "targets": [{"expr": "histogram_quantile(0.95, rate(lispflow_evaluation_duration_seconds_bucket[5m]))"}]},
+      {"title": "Ledger Growth", "type": "graph", "targets": [{"expr": "rate(lispflow_ledger_entries_total[5m])"}]},
+      {"title": "Active Plans", "type": "stat", "targets": [{"expr": "lispflow_active_plans"}]},
+      {"title": "Batch Size", "type": "heatmap", "targets": [{"expr": "lispflow_batch_size"}]},
+      {"title": "Error Rate", "type": "graph", "targets": [{"expr": "rate(lispflow_evaluations_total{status="error"}[5m])"}]}
+    ]
+  }
+}

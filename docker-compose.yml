@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    environment: { POSTGRES_DB: lispflow, POSTGRES_USER: lispflow, POSTGRES_PASSWORD: lispflow }
+    ports: ["5432:5432"]
+  redis:
+    image: redis:7
+    ports: ["6379:6379"]
+  api:
+    build: { context: ., dockerfile: docker/Dockerfile }
+    ports: ["8080:8080"]
+    environment:
+      DATABASE_URL: postgres://lispflow:lispflow@postgres:5432/lispflow?sslmode=disable
+      REDIS_URL: redis://redis:6379
+    depends_on: [postgres, redis]

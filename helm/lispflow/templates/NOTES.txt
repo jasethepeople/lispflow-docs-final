@@ -1,0 +1,8 @@
+LispFlow has been installed!
+
+API: http://{{ include "lispflow.fullname" . }}:{{ .Values.service.port }}
+Ingress: https://{{ (index .Values.ingress.hosts 0).host }}
+
+Run:
+  kubectl --namespace {{ .Release.Namespace }} get pods
+  kubectl --namespace {{ .Release.Namespace }} logs -l component=api

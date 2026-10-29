@@ -1,0 +1,3 @@
+export default function RootLayout({children}:{children: any}){
+ return (<html lang="en"><body style={{fontFamily:'system-ui', margin:0, background:'#0a0a0a', color:'#fafafa'}}><div style={{display:'flex', minHeight:'100vh'}}><nav style={{width:220, borderRight:'1px solid #222', padding:20, background:'#111'}}><h2>LispFlow</h2><a href="/" style={{display:'block', padding:'8px 0', color:'#aaa', textDecoration:'none'}}>Dashboard</a><a href="/editor" style={{display:'block', padding:'8px 0', color:'#aaa', textDecoration:'none'}}>Visual Editor</a><a href="/simulate" style={{display:'block', padding:'8px 0', color:'#aaa', textDecoration:'none'}}>Simulate</a></nav><main style={{flex:1, padding:32}}>{children}</main></div></body></html>)
+}

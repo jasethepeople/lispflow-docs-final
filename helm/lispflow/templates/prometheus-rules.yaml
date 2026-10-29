@@ -1,0 +1,23 @@
+{{- if .Values.monitoring.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ include "lispflow.fullname" . }}-rules
+spec:
+  groups:
+  - name: lispflow
+    rules:
+    - alert: HighEvaluationErrorRate
+      expr: rate(lispflow_evaluations_total{status="error"}[5m]) > 0.05
+      for: 2m
+      labels: { severity: critical }
+      annotations: { summary: "High eval error rate" }
+    - alert: SlowEvaluations
+      expr: histogram_quantile(0.95, rate(lispflow_evaluation_duration_seconds_bucket[5m])) > 0.5
+      for: 5m
+      labels: { severity: warning }
+      annotations: { summary: "P95 eval >500ms" }
+    - alert: BatcherLag
+      expr: lispflow_batch_size > 900
+      labels: { severity: warning }
+{{- end }}

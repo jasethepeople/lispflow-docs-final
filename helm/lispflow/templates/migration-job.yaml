@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "lispflow.fullname" . }}-migrate
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: migrate
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command: ["/app/lispflow", "migrate"]
+          envFrom:
+            - configMapRef: { name: {{ include "lispflow.fullname" . }}-config }
+            - secretRef: { name: {{ include "lispflow.fullname" . }}-secret }
